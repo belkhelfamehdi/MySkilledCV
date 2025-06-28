@@ -40,8 +40,10 @@ export class UserDashboardComponent {
   onSubmit() {
     if (this.form.invalid || !this.file) return;
     const { job, skills } = this.form.value;
-    this.resume.analyze(this.file, job, skills).subscribe(res => {
-      this.router.navigate(['/analysis'], { state: res });
+    this.resume.upload(this.file).subscribe(() => {
+      this.resume.analyze(this.file, job, skills).subscribe(res => {
+        this.router.navigate(['/analysis'], { state: res });
+      });
     });
   }
 }
