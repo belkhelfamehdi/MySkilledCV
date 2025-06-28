@@ -4,12 +4,14 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { CompanyDashboardComponent } from './pages/dashboard/company/company.component';
 import { UserDashboardComponent } from './pages/dashboard/user/user.component';
+import { AnalysisComponent } from './pages/analysis/analysis.component';
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'analysis', component: AnalysisComponent, canActivate: [authGuard] },
   {
     path: 'dashboard',
     canActivate: [authGuard],

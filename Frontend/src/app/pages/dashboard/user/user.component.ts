@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../../components/sidebar.component';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ResumeService } from '../../../services/resume.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -18,11 +20,6 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
           <textarea formControlName="skills" placeholder="Required Skills" class="p-2 border rounded"></textarea>
           <button class="bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition">Analyze</button>
         </form>
-        <div *ngIf="result" class="border rounded p-4">
-          <h2 class="font-semibold mb-2">AI Result</h2>
-          <p>Score: {{result.score}}</p>
-          <p>{{result.summary}}</p>
-        </div>
       </main>
     </div>
   `
@@ -30,8 +27,7 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 export class UserDashboardComponent {
   form: ReturnType<FormBuilder['group']>;
   file?: File;
-  result?: { score: number; summary: string };
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private resume: ResumeService, private router: Router) {
     this.form = this.fb.group({
       job: ['', Validators.required],
       skills: ['', Validators.required],
@@ -43,6 +39,9 @@ export class UserDashboardComponent {
   }
   onSubmit() {
     if (this.form.invalid || !this.file) return;
-    this.result = { score: 90, summary: 'Great fit for the position!' };
+    const { job, skills } = this.form.value;
+    this.resume.analyze(this.file, job, skills).subscribe(res => {
+      this.router.navigate(['/analysis'], { state: res });
+    });
   }
 }

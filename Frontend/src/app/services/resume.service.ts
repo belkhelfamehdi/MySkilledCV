@@ -13,6 +13,14 @@ export class ResumeService {
     return this.http.post(`${this.api}/upload`, formData);
   }
 
+  analyze(file: File, job: string, skills: string) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('job', job);
+    formData.append('skills', skills);
+    return this.http.post<{ score: number; summary: string }>(`${this.api}/analyze`, formData);
+  }
+
   getAll() {
     return this.http.get(`${this.api}`);
   }
