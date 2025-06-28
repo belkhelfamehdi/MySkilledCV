@@ -10,6 +10,10 @@ To start a local development server, run:
 ng serve
 ```
 
+The dev server proxies API requests starting with `/api` to the Spring Boot
+backend on `http://localhost:8080`. Ensure the backend is running so the
+frontend can communicate with it.
+
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
 ## Code scaffolding
