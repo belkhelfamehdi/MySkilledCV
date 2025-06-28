@@ -13,6 +13,7 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/api/resumes")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class ResumeController {
 
     @PostMapping(value = "/analyze", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

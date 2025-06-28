@@ -5,9 +5,9 @@ import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private api = '/api/auth';
+  private readonly api = 'http://localhost:8080/api/auth';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private readonly http: HttpClient, private readonly router: Router) {}
 
   login(credentials: { email: string; password: string }) {
     return this.http.post<{ token: string }>(`${this.api}/login`, credentials).pipe(
